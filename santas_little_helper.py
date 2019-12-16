@@ -111,7 +111,9 @@ def handle_response(r):
                 continue
             for entity in extra_info[room]['entities']:
                 if extra_info[room]['entities'][entity]['type'] == 'terminal' and extra_info[room]['entities'][entity]['name'] == term_id:
+                    resource_id = r_json['resourceId']
                     extra_info[room]['entities'][entity]['url'] = url + "?challenge=" + term_id
+                    extra_info[room]['entities'][entity]['resource_url'] = url + "?challenge=" + term_id + '&id=' + resource_id
 
     return m_type
 
@@ -337,7 +339,12 @@ def print_grid_specific(zone):
     print("")
     print(f"Terminals: ")
     for term in terminals:
+        term_name = term['name']
+        ws.send('{"type":"HELLO_ENTITY","entityType":"terminal","id":"%s"}' % term_name)
+        receive_until_terminal()
+        r_url = extra_info[zone]['entities'][term_name]['resource_url']
         print(f"- {term['display_name']}  (url:{term['url']})")
+        print(f"- Your personal link: {r_url}")
     print("")
 
 
@@ -447,6 +454,7 @@ def main():
             teleport()
         elif o in ("-g", "--print_grid"):
             load_data()
+            login()
             print_grid()
         elif o in ("-n", "--npc-talk"):
             load_data()

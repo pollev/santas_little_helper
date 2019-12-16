@@ -368,6 +368,11 @@ def print_grid():
     else:
         print_grid_specific(target)
 
+    discover("In order to use the docker links here, you need to paste the following javascript in your developer console after loading the docker:")
+    js_code = '''window.top.postMessage = function(message, other) {msg = '{"type":"COMPLETE_CHALLENGE","resourceId":"' + message.resourceId + '","hash":"' + message.hash + '"}';console.log(msg); ws = new WebSocket('wss://2019.kringlecon.com/ws'); ws.onopen = function () {      ws.send('{"type":"WS_CONNECTED","protocol":"43ae08fd-9cf2-4f54-a6a6-8454aef59581"}'); var passwd = prompt("Please enter your password", ""); ws.send('{"type":"WS_LOGIN","usernameOrEmail":"%s","password":"' + passwd + '"}'); setTimeout(function(){ ws.send(msg); }, 3000);     }}; '''
+    js_code = js_code % login_user
+    print(js_code)
+
     print("")
 
 

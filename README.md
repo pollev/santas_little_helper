@@ -5,6 +5,11 @@ This is a tool I wrote for interacting with the backend server during the Kringl
 
 It generates map data and is able to start conversations with npc's anywhere on the map. But most importantly, it can teleport your character to any room in the Kringlecon CTF game. This includes rooms that are normally locked and not accessible. This allows you to reach the end credits of the game without doing a single challenge.
 
+## Installation
+Please install the following dependency first:
+
+`python3 -m pip install websocket_client`
+
 ## Usage
 
 To use this script, fill in your email address inside the script and then run it.
